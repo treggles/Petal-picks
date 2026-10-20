@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petal Picks | 1-800-Flowers Daily Rare Bloom Challenge</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2d5a3f;
+            --primary-dark: #1e3c29;
+            --accent: #d4a373;
+            --rose: #e07a5f;
+            --purple: #7209b7;
+            --diamond: #00b4d8;
+            --green: #2b9348;
+            --bg-cream: #faf6f0;
+            --card-bg: #ffffff;
+            --text-main: #2b2b2b;
+            --text-muted: #666666;
+            --border: #e6dfd5;
+            --shadow: 0 10px 30px rgba(45, 90, 63, 0.08);
+            --radius: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-cream);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 20px;
+            background-image: radial-gradient(#d4a373 0.75px, transparent 0.75px), radial-gradient(#d4a373 0.75px, var(--bg-cream) 0.75px);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            background-opacity: 0.15;
+        }
+
+        header {
+            width: 100%;
+            max-width: 650px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-icon {
+            font-size: 28px;
+            background: rgba(45, 90, 63, 0.1);
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+        }
+
+        .brand-text h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            color: var(--primary);
+            line-height: 1.1;
+        }
+
+        .brand-text span {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .icon-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.2s;
+        }
+
+        .icon-btn:hover {
+            background: var(--bg-cream);
+            border-color: var(--primary);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 650px;
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Screen States */
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Welcome Screen */
+        .hero-banner {
+            text-align: center;
+            padding: 10px 0 20px 0;
+        }
+
+        .hero-banner h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .hero-banner p {
+            color: var(--text-muted);
+            font-size: 15px;
+            line-height: 1.5;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        .mode-selector {
+            display: grid;
+            gap: 12px;
+            margin: 25px 0;
+        }
+
+        .mode-card {
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 16px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s;
+            background: var(--bg-cream);
+        }
+
+        .mode-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            background: #fff;
+        }
+
+        .mode-card.selected {
+            border-color: var(--primary);
+            background: rgba(45, 90, 63, 0.05);
+        }
+
+        .mode-info h3 {
+            font-size: 16px;
+            color: var(--primary);
+            margin-bottom: 3px;
+        }
+
+        .mode-info p {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .btn-primary {
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            box-shadow: 0 4px 12px rgba(45, 90, 63, 0.2);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        /* Game Screen Header */
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 15px;
+        }
+
+        .round-badge {
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--primary);
+            background: rgba(45, 90, 63, 0.1);
+            padding: 6px 12px;
+            border-radius: 20px;
+        }
+
+        .score-tracker {
+            font-weight: 700;
+            font-size: 15px;
+            color: var(--text-main);
+        }
+
+        /* Timer Bar */
+        .timer-container {
+            width: 100%;
+            height: 6px;
+            background: var(--border);
+            border-radius: 3px;
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+
+        .timer-bar {
+            height: 100%;
+            background: var(--primary);
+            width: 100%;
+            transition: width 1s linear, background 0.3s;
+        }
+
+        .timer-bar.warning {
+            background: var(--rose);
+        }
+
+        /* Question Box */
+        .question-box {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .question-box h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            color: var(--text-main);
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .question-box p {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        /* Input & Ideas */
+        .input-group {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 16px 20px;
+            font-size: 16px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            outline: none;
+            transition: border-color 0.2s;
+            background: #fff;
+        }
+
+        .input-group input:focus {
+            border-color: var(--primary);
+        }
+
+        .submit-btn {
+            position: absolute;
+            right: 8px;
+            top: 8px;
+            bottom: 8px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .submit-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .helpers-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .idea-toggle {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .idea-toggle:hover {
+            text-decoration: underline;
+        }
+
+        .hints-box {
+            background: var(--bg-cream);
+            border: 1px dashed var(--accent);
+            border-radius: 10px;
+            padding: 12px 15px;
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .hints-box.visible {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* SVG Vase Bouquet Canvas */
+        .bouquet-preview-area {
+            background: var(--bg-cream);
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 15px;
+            border: 1px solid var(--border);
+        }
+
+        .bouquet-preview-area h4 {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+
+        .mini-bouquet {
+            display: flex;
+            gap: 10px;
+            align-items: flex-end;
+            height: 60px;
+        }
+
+        .stem-slot {
+            width: 25px;
+            height: 50px;
+            border-bottom: 3px solid var(--primary);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            font-size: 20px;
+            opacity: 0.3;
+            transition: all 0.3s;
+        }
+
+        .stem-slot.filled {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        /* Feedback Modal / Overlay */
+        .feedback-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .feedback-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .feedback-card {
+            background: #fff;
+            width: 90%;
+            max-width: 420px;
+            border-radius: var(--radius);
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            transform: scale(0.9);
+            transition: transform 0.3s;
+        }
+
+        .feedback-overlay.active .feedback-card {
+            transform: scale(1);
+        }
+
+        .rarity-badge-large {
+            display: inline-block;
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .feedback-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            margin-bottom: 5px;
+            color: var(--primary);
+        }
+
+        .feedback-card .points-earned {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+
+        .feedback-card p {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        /* Results Screen */
+        .results-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .results-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .final-score-display {
+            background: rgba(45, 90, 63, 0.05);
+            border: 2px dashed var(--primary);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .final-score-display .score-num {
+            font-size: 42px;
+            font-weight: 700;
+            color: var(--primary);
+            font-family: 'Playfair Display', serif;
+        }
+
+        .final-score-display .score-label {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+        }
+
+        .bouquet-summary-grid {
+            display: grid;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .summary-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 15px;
+            background: var(--bg-cream);
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            font-size: 14px;
+        }
+
+        .summary-item .ans-meta {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .promo-box {
+            background: linear-gradient(135deg, #2d5a3f, #1e3c29);
+            color: white;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .promo-box h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            margin-bottom: 5px;
+            color: #f4e8d8;
+        }
+
+        .promo-box p {
+            font-size: 13px;
+            opacity: 0.9;
+            margin-bottom: 12px;
+        }
+
+        .promo-code {
+            background: rgba(255,255,255,0.15);
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            font-size: 16px;
+            border: 1px dashed rgba(255,255,255,0.4);
+        }
+
+        .share-btn {
+            background: #25D366;
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            transition: opacity 0.2s;
+        }
+
+        .share-btn:hover {
+            opacity: 0.9;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(45, 90, 63, 0.05);
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #2b2b2b;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 14px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+            z-index: 200;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        @media (max-width: 480px) {
+            body { padding: 10px; }
+            .container { padding: 20px; }
+            .hero-banner h2 { font-size: 26px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="brand">
+            <div class="brand-icon">🌸</div>
+            <div class="brand-text">
+                <h1>Petal Picks</h1>
+                <span>1-800-Flowers Daily</span>
+            </div>
+        </div>
+        <div class="header-actions">
+            <button class="icon-btn" id="soundToggle" title="Toggle Sound">🔊</button>
+            <button class="icon-btn" id="infoBtn" title="How to Play">❓</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- WELCOME SCREEN -->
+        <div id="welcomeScreen" class="screen active">
+            <div class="hero-banner">
+                <h2>Build Your Rare Bouquet</h2>
+                <p>Guess flower & gift prompts. The rarer your correct answer among players, the higher your score and the more exotic your bouquet!</p>
+            </div>
+
+            <div class="mode-selector">
+                <div class="mode-card selected" data-mode="daily">
+                    <div class="mode-info">
+                        <h3>Daily Bouquet #42</h3>
+                        <p>Today’s curated 5 flower & gift prompts</p>
+                    </div>
+                    <span style="font-size: 22px;">🌸</span>
+                </div>
+                <div class="mode-card" data-mode="botanical">
+                    <div class="mode-info">
+                        <h3>Botanical Brunch #43</h3>
+                        <p>Bonus challenge mode with rare varieties</p>
+                    </div>
+                    <span style="font-size: 22px;">🌷</span>
+                </div>
+            </div>
+
+            <button class="btn-primary" id="startBtn">Start Today’s Bouquet</button>
+        </div>
+
+        <!-- GAME SCREEN -->
+        <div id="gameScreen" class="screen">
+            <div class="game-header">
+                <div class="round-badge" id="roundBadge">Round 1 / 5</div>
+                <div class="score-tracker">Score: <span id="currentScore">0</span> pts</div>
+            </div>
+
+            <div class="timer-container">
+                <div class="timer-bar" id="timerBar"></div>
+            </div>
+
+            <div class="question-box">
+                <h3 id="promptTitle">Name a red flower.</h3>
+                <p id="promptSubtitle">Type a valid answer before time runs out!</p>
+            </div>
+
+            <div class="input-group">
+                <input type="text" id="answerInput" placeholder="Type your answer here..." autocomplete="off">
+                <button class="submit-btn" id="submitBtn">Submit</button>
+            </div>
+
+            <div class="helpers-row">
+                <button class="idea-toggle" id="ideaToggle">💡 Greenhouse Idea Pills</button>
+                <span style="font-size: 12px; color: var(--text-muted);" id="categoryHint">Category: Flora</span>
+            </div>
+
+            <div class="hints-box" id="hintsBox">
+                <strong>Greenhouse Ideas:</strong> <span id="hintText">Rose, Dahlia, Tulips, Carnation...</span>
+            </div>
+
+            <div class="bouquet-preview-area">
+                <h4>Your Bouquet Progress</h4>
+                <div class="mini-bouquet" id="miniBouquet">
+                    <div class="stem-slot" id="slot-0"></div>
+                    <div class="stem-slot" id="slot-1"></div>
+                    <div class="stem-slot" id="slot-2"></div>
+                    <div class="stem-slot" id="slot-3"></div>
+                    <div class="stem-slot" id="slot-4"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RESULTS SCREEN -->
+        <div id="resultsScreen" class="screen">
+            <div class="results-header">
+                <h2>Bouquet Complete! 💐</h2>
+                <p>Here is your rarity breakdown for Daily Bouquet #42</p>
+            </div>
+
+            <div class="final-score-display">
+                <div class="score-num" id="finalScoreNum">412 / 500</div>
+                <div class="score-label">Total Rarity Score</div>
+            </div>
+
+            <div class="bouquet-summary-grid" id="summaryGrid">
+                <!-- Populated dynamically -->
+            </div>
+
+            <div class="promo-box" id="promoBox" style="display: none;">
+                <h4>🎉 Exclusive Reward Unlocked!</h4>
+                <p>You scored over 350 points! Enjoy 15% off your next order at 1-800-Flowers.</p>
+                <div class="promo-code">PETALPICKS15</div>
+            </div>
+
+            <button class="share-btn" id="shareScoreBtn">
+                📋 Copy Spoiler-Free Bouquet to Share
+            </button>
+            <button class="btn-secondary" id="playAgainBtn">Play Again / Reset</button>
+        </div>
+    </div>
+
+    <!-- FEEDBACK OVERLAY -->
+    <div class="feedback-overlay" id="feedbackOverlay">
+        <div class="feedback-card">
+            <div class="rarity-badge-large" id="feedbackIcon">🟣</div>
+            <h3 id="feedbackTitle">Rare Bloom!</h3>
+            <div class="points-earned" id="feedbackPoints">+85 pts</div>
+            <p id="feedbackDesc">You named Anthurium. Only 1.2% of players guessed this!</p>
+            <button class="btn-primary" id="nextRoundBtn">Next Flower</button>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">Copied to clipboard!</div>
+
+    <script>
+        // Game Datasets
+        const datasets = {
+            daily: [
+                {
+                    prompt: "Name a red flower.",
+                    subtitle: "From garden classics to tropical rarities",
+                    hints: ["Rose", "Tulip", "Red Dahlia", "Anthurium", "Poinsettia"],
+                    common: ["rose", "tulip", "carnation", "poppy"], // >50% (10 pts)
+                    rare: ["dahlia", "hibiscus", "peony", "amaryllis"], // 5-50% (50 pts)
+                    ultra: ["anthurium", "camellia", "ranunculus", "gloxinia"] // <5% (95-100 pts)
+                },
+                {
+                    prompt: "Name an occasion people send flowers.",
+                    subtitle: "Life moments celebrated with fresh stems",
+                    hints: ["Valentine's Day", "Birthday", "Housewarming", "Sympathy", "Apology"],
+                    common: ["valentines day", "birthday", "mothers day", "anniversary"],
+                    general: ["funeral", "graduation", "get well", "wedding"],
+                    rare: ["housewarming", "promotion", "apology", "just because", "retirement"]
+                },
+                {
+                    prompt: "Name a U.S. state flower.",
+                    subtitle: "Official state botanical symbols",
+                    hints: ["Bluebonnet", "Sunflower", "Goldenrod", "Saguaro Blossom", "Camellia"],
+                    common: ["sunflower", "rose", "bluebonnet", "goldenrod"],
+                    rare: ["peach blossom", "syringa", "orange blossom", "indian paintbrush"],
+                    ultra: ["saguaro blossom", "bitterroot", "lewisia", "mountain laurel"]
+                },
+                {
+                    prompt: "Name a gift typically paired with flowers.",
+                    subtitle: "The classic companion add-ons",
+                    hints: ["Chocolates", "Teddy Bear", "Scented Candle", "Champagne", "Balloon"],
+                    common: ["chocolates", "teddy bear", "balloon", "card"],
+                    rare: ["scented candle", "champagne", "wine", "spa basket"],
+                    ultra: ["cashmere throw", "bonsai tree", "tea set", "crystal vase"]
+                },
+                {
+                    prompt: "Name a flower native to Asia.",
+                    subtitle: "Botanical treasures from the Eastern hemisphere",
+                    hints: ["Cherry Blossom", "Lotus", "Chrysanthemum", "Orchid", "Corpse Flower"],
+                    common: ["cherry blossom", "lotus", "orchid", "chrysanthemum"],
+                    rare: ["peony", "jasmine", "rhododendron", "camellia"],
+                    ultra: ["corpse flower", "blue poppy", "nepenthes", "titan arum"]
+                }
+            ],
+            botanical: [
+                {
+                    prompt: "Name a fragrant garden herb or flower.",
+                    subtitle: "Botanicals known for aromatic oils",
+                    hints: ["Lavender", "Rosemary", "Jasmine", "Gardenia", "Eucalyptus"],
+                    common: ["lavender", "rosemary", "mint"],
+                    rare: ["jasmine", "gardenia", "chamomile", "sage"],
+                    ultra: ["patchouli", "lemongrass", "lemon verbena", "tuberoses"]
+                },
+                {
+                    prompt: "Name a tropical plant often kept indoors.",
+                    subtitle: "Lush foliage brought inside homes",
+                    hints: ["Monstera", "Snake Plant", "Fiddle Leaf Fig", "Pothos", "Bird of Paradise"],
+                    common: ["monstera", "snake plant", "pothos"],
+                    rare: ["fiddle leaf fig", "bird of paradise", "zz plant", "spider plant"],
+                    ultra: ["alocasia dragon scale", "philodendron pink princess", "calathea orbifolia"]
+                },
+                {
+                    prompt: "Name a yellow flower.",
+                    subtitle: "Bright sunny botanical varieties",
+                    hints: ["Sunflower", "Daffodil", "Marigold", "Black-Eyed Susan", "Forsythia"],
+                    common: ["sunflower", "daffodil", "dandelion"],
+                    rare: ["marigold", "black eyed susan", "tulip", "chrysanthemum"],
+                    ultra: ["forsythia", "oncidium orchid", "billy buttons", "hypericum"]
+                },
+                {
+                    prompt: "Name a wedding flower favorite.",
+                    subtitle: "Blooms that line aisle arrangements",
+                    hints: ["Rose", "Peony", "Calla Lily", "Hydrangea", "Ranunculus"],
+                    common: ["rose", "peony", "hydrangea"],
+                    rare: ["calla lily", "ranunculus", "orchid", "baby's breath"],
+                    ultra: ["stephanotis", "sweet pea", "lily of the valley", "delphinium"]
+                },
+                {
+                    prompt: "Name a flower blooming in spring.",
+                    subtitle: "First sprouts after winter thaw",
+                    hints: ["Tulip", "Daffodil", "Hyacinth", "Crocus", "Lilac"],
+                    common: ["tulip", "daffodil", "crocus"],
+                    rare: ["hyacinth", "lilac", "pansy", "primrose"],
+                    ultra: ["hellebore", "snowdrop", "bleeding heart", "muscari"]
+                }
+            ]
+        };
+
+        // State variables
+        let currentMode = 'daily';
+        let currentRound = 0;
+        let score = 0;
+        let timer = null;
+        let timeLeft = 15;
+        let roundResults = [];
+        let soundEnabled = true;
+        let selectedDataset = datasets.daily;
+
+        // Audio Context (Web Audio API for subtle sound effects)
+        let audioCtx = null;
+        function playSound(type) {
+            if (!soundEnabled) return;
+            try {
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                let now = audioCtx.currentTime;
+                if (type === 'pop') {
+                    osc.frequency.setValueAtTime(400, now);
+                    osc.frequency.exponentialRampToValueAtTime(800, now + 0.1);
+                    gain.gain.setValueAtTime(0.15, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+                    osc.start(now);
+                    osc.stop(now + 0.1);
+                } else if (type === 'rare') {
+                    osc.frequency.setValueAtTime(523.25, now); // C5
+                    osc.frequency.setValueAtTime(659.25, now + 0.1); // E5
+                    osc.frequency.setValueAtTime(783.99, now + 0.2); // G5
+                    gain.gain.setValueAtTime(0.2, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
+                    osc.start(now);
+                    osc.stop(now + 0.4);
+                } else if (type === 'common') {
+                    osc.frequency.setValueAtTime(300, now);
+                    osc.frequency.exponentialRampToValueAtTime(200, now + 0.2);
+                    gain.gain.setValueAtTime(0.15, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+                    osc.start(now);
+                    osc.stop(now + 0.2);
+                }
+            } catch (e) {
+                // Audio not allowed yet
+            }
+        }
+
+        // DOM Elements
+        const welcomeScreen = document.getElementById('welcomeScreen');
+        const gameScreen = document.getElementById('gameScreen');
+        const resultsScreen = document.getElementById('resultsScreen');
+        const startBtn = document.getElementById('startBtn');
+        const modeCards = document.querySelectorAll('.mode-card');
+        const roundBadge = document.getElementById('roundBadge');
+        const currentScoreEl = document.getElementById('currentScore');
+        const timerBar = document.getElementById('timerBar');
+        const promptTitle = document.getElementById('promptTitle');
+        const promptSubtitle = document.getElementById('promptSubtitle');
+        const answerInput = document.getElementById('answerInput');
+        const submitBtn = document.getElementById('submitBtn');
+        const ideaToggle = document.getElementById('ideaToggle');
+        const hintsBox = document.getElementById('hintsBox');
+        const hintText = document.getElementById('hintText');
+        const feedbackOverlay = document.getElementById('feedbackOverlay');
+        const feedbackIcon = document.getElementById('feedbackIcon');
+        const feedbackTitle = document.getElementById('feedbackTitle');
+        const feedbackPoints = document.getElementById('feedbackPoints');
+        const feedbackDesc = document.getElementById('feedbackDesc');
+        const nextRoundBtn = document.getElementById('nextRoundBtn');
+        const finalScoreNum = document.getElementById('finalScoreNum');
+        const summaryGrid = document.getElementById('summaryGrid');
+        const promoBox = document.getElementById('promoBox');
+        const shareScoreBtn = document.getElementById('shareScoreBtn');
+        const playAgainBtn = document.getElementById('playAgainBtn');
+        const soundToggle = document.getElementById('soundToggle');
+        const infoBtn = document.getElementById('infoBtn');
+        const toast = document.getElementById('toast');
+
+        // Mode selection
+        modeCards.forEach(card => {
+            card.addEventListener('click', () => {
+                modeCards.forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                currentMode = card.getAttribute('data-mode');
+                selectedDataset = datasets[currentMode];
+            });
+        });
+
+        startBtn.addEventListener('click', startGame);
+
+        function startGame() {
+            currentRound = 0;
+            score = 0;
+            roundResults = [];
+            currentScoreEl.textContent = '0';
+            welcomeScreen.classList.remove('active');
+            gameScreen.classList.add('active');
+            loadRound();
+        }
+
+        function loadRound() {
+            if (currentRound >= 5) {
+                showResults();
+                return;
+            }
+
+            const data = selectedDataset[currentRound];
+            roundBadge.textContent = `Round ${currentRound + 1} / 5`;
+            promptTitle.textContent = data.prompt;
+            promptSubtitle.textContent = data.subtitle;
+            hintText.textContent = data.hints.join(', ');
+            answerInput.value = '';
+            hintsBox.classList.remove('visible');
+
+            // Reset slots UI
+            for (let i = 0; i < 5; i++) {
+                const slot = document.getElementById(`slot-${i}`);
+                slot.classList.remove('filled');
+                slot.textContent = '';
+            }
+            for (let i = 0; i < currentRound; i++) {
+                const slot = document.getElementById(`slot-${i}`);
+                slot.classList.add('filled');
+                slot.textContent = roundResults[i].icon;
+            }
+
+            startTimer();
+        }
+
+        function startTimer() {
+            clearInterval(timer);
+            timeLeft = 15;
+            timerBar.style.width = '100%';
+            timerBar.classList.remove('warning');
+
+            timer = setInterval(() => {
+                timeLeft--;
+                let pct = (timeLeft / 15) * 100;
+                timerBar.style.width = `${pct}%`;
+                if (timeLeft <= 5) {
+                    timerBar.classList.add('warning');
+                }
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    submitAnswer(true); // Time out
+                }
+            }, 1000);
+        }
+
+        ideaToggle.addEventListener('click', () => {
+            hintsBox.classList.toggle('visible');
+        });
+
+        submitBtn.addEventListener('click', () => submitAnswer(false));
+        answerInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') submitAnswer(false);
+        });
+
+        function submitAnswer(isTimeout) {
+            clearInterval(timer);
+            const data = selectedDataset[currentRound];
+            const rawInput = answerInput.value.trim().toLowerCase();
+
+            let rarity = 'invalid';
+            let pts = 0;
+            let icon = '🌿';
+            let title = 'Invalid / Missed';
+            let desc = isTimeout ? "Time ran out before you answered!" : `"${answerInput.value || 'Blank'}" wasn't recognized in our botanical index.`;
+
+            if (!isTimeout && rawInput.length > 0) {
+                // Check rarity tiers
+                const isCommon = data.common && data.common.some(c => rawInput.includes(c));
+                const isRare = data.rare && data.rare.some(r => rawInput.includes(r));
+                const isUltra = data.ultra && data.ultra.some(u => rawInput.includes(u));
+                const isGeneral = data.general && data.general.some(g => rawInput.includes(g));
+
+                if (isUltra) {
+                    rarity = 'diamond';
+                    pts = 100;
+                    icon = '💎';
+                    title = 'One in a Million! (Ultra Rare)';
+                    desc = `You named "${answerInput.value}". Only 0.1% of players guessed this rare bloom!`;
+                    playSound('rare');
+                } else if (isRare) {
+                    rarity = 'purple';
+                    pts = 85;
+                    icon = '🟣';
+                    title = 'Rare Bloom!';
+                    desc = `You named "${answerInput.value}". Only 3.4% of players guessed this!`;
+                    playSound('rare');
+                } else if (isGeneral || isCommon) {
+                    rarity = 'green';
+                    pts = 40;
+                    icon = '🟢';
+                    title = 'Common Stem';
+                    desc = `You named "${answerInput.value}". A solid, popular choice among players.`;
+                    playSound('common');
+                } else {
+                    // Valid custom answer fallback (treat as uncommon/rare reward)
+                    rarity = 'flower';
+                    pts = 75;
+                    icon = '🌸';
+                    title = 'Botanical Find!';
+                    desc = `Valid custom match for "${answerInput.value}"! Unique bouquet addition.`;
+                    playSound('pop');
+                }
+            } else {
+                playSound('common');
+            }
+
+            score += pts;
+            currentScoreEl.textContent = score;
+
+            roundResults.push({
+                prompt: data.prompt,
+                answer: answerInput.value || '(None)',
+                pts: pts,
+                icon: icon,
+                title: title
+            });
+
+            // Show feedback overlay
+            feedbackIcon.textContent = icon;
+            feedbackTitle.textContent = title;
+            feedbackPoints.textContent = `+${pts} pts`;
+            feedbackDesc.textContent = desc;
+            feedbackOverlay.classList.add('active');
+        }
+
+        nextRoundBtn.addEventListener('click', () => {
+            feedbackOverlay.classList.remove('active');
+            currentRound++;
+            loadRound();
+        });
+
+        function showResults() {
+            gameScreen.classList.remove('active');
+            resultsScreen.classList.add('active');
+
+            finalScoreNum.textContent = `${score} / 500`;
+
+            if (score >= 350) {
+                promoBox.style.display = 'block';
+            } else {
+                promoBox.style.display = 'none';
+            }
+
+            summaryGrid.innerHTML = '';
+            roundResults.forEach((res, idx) => {
+                const item = document.createElement('div');
+                item.className = 'summary-item';
+                item.innerHTML = `
+                    <div>
+                        <strong style="display:block; margin-bottom:2px;">R${idx + 1}: ${res.answer}</strong>
+                        <span style="font-size:12px; color:var(--text-muted);">${res.title}</span>
+                    </div>
+                    <div style="text-align:right;">
+                        <span style="font-size:18px; margin-right:5px;">${res.icon}</span>
+                        <span class="ans-meta">+${res.pts}</span>
+                    </div>
+                `;
+                summaryGrid.appendChild(item);
+            });
+        }
+
+        shareScoreBtn.addEventListener('click', () => {
+            const icons = roundResults.map(r => r.icon).join(' ');
+            const shareText = `Petal Picks #42 🌸\n${icons}\nBouquet Rarity Score: ${score} / 500\nPlay today’s bouquet at 1800flowers.com/petal-picks`;
+            
+            navigator.clipboard.writeText(shareText).then(() => {
+                showToast("Spoiler-free bouquet copied to clipboard!");
+            }).catch(() => {
+                showToast("Failed to copy share text.");
+            });
+        });
+
+        playAgainBtn.addEventListener('click', () => {
+            resultsScreen.classList.remove('active');
+            welcomeScreen.classList.add('active');
+        });
+
+        soundToggle.addEventListener('click', () => {
+            soundEnabled = !soundEnabled;
+            soundToggle.textContent = soundEnabled ? '🔊' : '🔇';
+            showToast(soundEnabled ? "Sound effects enabled" : "Sound muted");
+        });
+
+        infoBtn.addEventListener('click', () => {
+            alert("How to Play Petal Picks:\n\n1. You will get 5 flower & gift prompts with 15 seconds each.\n2. Give correct answers. Rarer answers among players yield higher points and shimmering exotic blooms!\n3. Score 350+ points to unlock an exclusive 1-800-Flowers promo code.");
+        });
+
+        function showToast(msg) {
+            toast.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
+        }
+    </script>
+</body>
+</html>
